@@ -17,7 +17,7 @@
 /// You can find more about structs in the Rust Book: https://doc.rust-lang.org/book/ch05-01-defining-structs.html
 pub struct Ticket {
     title: String,
-    __: __
+    description: String
 }
 
 /// `cfg` stands for configuration flag.
@@ -27,6 +27,7 @@ pub struct Ticket {
 /// when running `cargo test`...
 /// Yes, tests!
 ///
+/// 
 /// You can put tests in different places in a Rust project, depending on what you are
 /// trying to do: unit testing of private functions and methods, testing an internal API,
 /// integration testing your crate from the outside, etc.
