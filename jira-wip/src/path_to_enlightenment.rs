@@ -8,3 +8,6 @@ mod ticket;
 #[path = "koans/01_ticket/02_status.rs"]
 mod status;
 
+#[path = "koans/01_ticket/03_validation.rs"]
+mod validation;
+
