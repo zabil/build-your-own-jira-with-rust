@@ -29,15 +29,17 @@ impl TicketStore {
         }
     }
 
-    pub fn save(&mut self, ticket: Ticket) -> TicketId {
+    pub fn save(&mut self, mut ticket: Ticket) -> TicketId {
         let id = self.generate_id();
+        ticket.id = Some(id);
+        ticket.created_at = Some(Utc::now());
         self.data.insert(id, ticket);
         id
     }
 
     pub fn get(&self, id: &TicketId) -> Option<&Ticket> {
-                                                      self.data.get(id)
-                                                                       }
+        self.data.get(id)
+    }
 
     fn generate_id(&mut self) -> TicketId {
         self.current_id += 1;
@@ -50,30 +52,32 @@ pub struct Ticket {
     title: String,
     description: String,
     status: Status,
+    created_at: Option<DateTime<Utc>>,
+    id: Option<TicketId>,
 }
 
 impl Ticket {
     pub fn title(&self) -> &String {
-                                 &self.title
-                                            }
+        &self.title
+    }
 
     pub fn description(&self) -> &String {
-                                       &self.description
-                                                        }
+        &self.description
+    }
 
     pub fn status(&self) -> &Status {
-                                  &self.status
-                                              }
+        &self.status
+    }
 
     // The datetime when the ticket was saved in the store, if it was saved.
-    pub fn created_at(&self) -> __ {
-                                 todo!()
-                                        }
+    pub fn created_at(&self) -> Option<DateTime<Utc>> {
+        self.created_at
+    }
 
     // The id associated with the ticket when it was saved in the store, if it was saved.
-    pub fn id(&self) -> __ {
-                         todo!()
-                                }
+    pub fn id(&self) -> Option<&TicketId> {
+        self.id.as_ref()
+    }
 }
 
 pub fn create_ticket(title: String, description: String, status: Status) -> Ticket {
@@ -91,6 +95,8 @@ pub fn create_ticket(title: String, description: String, status: Status) -> Tick
         title,
         description,
         status,
+        created_at: None,
+        id: None,
     }
 }
 

@@ -3,6 +3,7 @@ use super::recap::Status;
 use chrono::{DateTime, Utc};
 use std::collections::HashMap;
 use std::error::Error;
+use std::iter::FromIterator;
 
 /// Let's turn our attention again to our `TicketStore`.
 /// We can create a ticket, we can retrieve a ticket.
@@ -35,15 +36,15 @@ impl TicketStore {
     }
 
     pub fn get(&self, id: &TicketId) -> Option<&Ticket> {
-                                                      self.data.get(id)
-                                                                       }
+        self.data.get(id)
+    }
 
     /// List will return a `Vec`.
     /// Check the Rust book for a primer: https://doc.rust-lang.org/book/ch08-01-vectors.html
     /// The Rust documentation for `HashMap` will also be handy:
     /// https://doc.rust-lang.org/std/collections/struct.HashMap.html
     pub fn list(&self) -> Vec<&Ticket> {
-        todo!()
+        self.data.values().collect()
     }
 
     fn generate_id(&mut self) -> TicketId {
@@ -60,11 +61,11 @@ pub struct TicketDraft {
 
 impl TicketDraft {
     pub fn title(&self) -> &String {
-                                 &self.title
-                                            }
+        &self.title
+    }
     pub fn description(&self) -> &String {
-                                       &self.description
-                                                        }
+        &self.description
+    }
 
     pub fn new(title: String, description: String) -> Result<TicketDraft, ValidationError> {
         if title.is_empty() {
@@ -93,8 +94,8 @@ impl Error for ValidationError {}
 
 impl std::fmt::Display for ValidationError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-                                                                 write!(f, "{}", self.0)
-                                                                                        }
+        write!(f, "{}", self.0)
+    }
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -108,20 +109,20 @@ pub struct Ticket {
 
 impl Ticket {
     pub fn title(&self) -> &String {
-                                 &self.title
-                                            }
+        &self.title
+    }
     pub fn description(&self) -> &String {
-                                       &self.description
-                                                        }
+        &self.description
+    }
     pub fn status(&self) -> &Status {
-                                  &self.status
-                                              }
+        &self.status
+    }
     pub fn created_at(&self) -> &DateTime<Utc> {
-                                             &self.created_at
-                                                             }
+        &self.created_at
+    }
     pub fn id(&self) -> &TicketId {
-                                &self.id
-                                        }
+        &self.id
+    }
 }
 
 #[cfg(test)]

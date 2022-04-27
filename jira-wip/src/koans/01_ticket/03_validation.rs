@@ -24,7 +24,7 @@ struct Ticket {
 /// We will learn a better way to handle recoverable errors such as this one further along,
 /// but let's rely on panic for the time being.
 fn create_ticket(title: String, description: String, status: Status) -> Ticket {
-    if title.is_empty() || description.is_empty() || title.len() > 3000 || description.len() > 3000
+    if title.is_empty() || description.is_empty() || title.len() > 50 || description.len() > 3000
     {
         panic!("The title or description cannot be empty");
     }
